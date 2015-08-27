@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="chrome=1">
+		<title>Дворы</title>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+	</head>
+	<body>
+
+		<div id="map" style="width: 1200px; height: 900px"></div>
+
+
+		<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+
+		<script type="text/javascript">
+
+			ymaps.ready(make_map);
+			var myMap;
+			var factory_mark;
+
+			function make_map() {
+
+				myMap = new ymaps.Map("map", {
+					center: [55.12177266, 36.61659852],
+					zoom: 16,
+					type: 'yandex#publicMap'
+				});
+
+
+				// Создаем многоугольник, используя вспомогательный класс Polygon.
+				    var myPolygon = new ymaps.Polygon([
+				        // Указываем координаты вершин многоугольника.
+				        // Координаты вершин внешнего контура.
+				        [[55.120662960016396,36.6223662969589],[55.12038613260428,36.62280586011886],[55.11952535665706,36.62243413988112],[55.119622282089686,36.621937550926205],[55.120662960016396,36.6223662969589]]
+				    ], {
+				        // Описываем свойства геообъекта.
+				        // Содержимое балуна.
+				        hintContent: "Многоугольник",
+				        
+               			balloonContentHeader:'Двор №' + '1',
+                		balloonContentBody: '<h3>Население</h3>' +
+                			'<p>' +
+                			'Курчатова 60: <b>60</b>' + '<br>' +
+                			'Курчатова 64: <b>90</b>' + '<br>' +
+                			'Курчатова 66: <b>30</b>' + '<br>' +
+                			'Курчатова 68: <b>50</b>' + '<br>' +
+                			'<b>Всего: 230 жителей</b>' +
+                			'</p>' +
+                			
+                			'<h3>Инфрастуктура</h3>' +
+                			'<p>' +
+                			'<b>Детская площадка:	</b>' + 'есть'  + '<br>' +
+                			'<b>Турники	: </b>' + 'нет'  + '<br>' +
+                			'<b>Баскетбольный корт:	</b>' + 'нет'  + '<br>' +
+                			'<b>Футбольное поле:	</b>' + 'нет'  + '<br>' +
+                			'<b>Хоккейный корт:	</b>' + 'нет'  + '<br>' +
+                			'<b>Теннисные столы:	</b>' + 'нет'  + '<br>' +
+                			'</p>'
+                		//balloonContentFooter:'<sup>Щелкните еще раз</sup>'
+            
+				    }, {
+				        // Задаем опции геообъекта.
+				        // Цвет заливки.
+				        fillColor: '#00FF0088',
+				        fillOpacity: 0.4,
+				        // Ширина обводки.
+				        strokeWidth: 5,
+				        draggable: true
+				    });
+
+				    // Добавляем многоугольник на карту.
+				    myMap.geoObjects.add(myPolygon);
+
+
+				    var myPolygon2 = new ymaps.Polygon([
+				        // Указываем координаты вершин многоугольника.
+				        // Координаты вершин внешнего контура.
+				        [[55.11909959277939,36.61800502509522],[55.118895829138836,36.61943180073222],[55.118563026877446,36.61930131974625],[55.11873447309761,36.61791040422877],[55.118756803132946,36.61792764844361],[55.11909959277939,36.61800502509522]]
+				    ], {
+				        // Описываем свойства геообъекта.
+				        // Содержимое балуна.
+				        hintContent: "Многоугольник",
+				        
+               			balloonContentHeader:'Двор №' + '2',
+                		balloonContentBody: '<h3>Население</h3>' +
+                			'<p>' +
+                			'Энгельса 4: <b>108</b>' + '<br>' +
+                			'Энгельса 6: <b>144</b>' + '<br>' +
+                			'<b>Всего: 152 жителей</b>' +
+                			'</p>' +
+                			
+                			'<h3>Инфрастуктура</h3>' +
+                			'<p>' +
+                			'<b>Детская площадка:	</b>' + 'нет'  + '<br>' +
+                			'<b>Турники	: </b>' + 'нет'  + '<br>' +
+                			'<b>Баскетбольный корт:	</b>' + 'нет'  + '<br>' +
+                			'<b>Футбольное поле:	</b>' + 'нет'  + '<br>' +
+                			'<b>Хоккейный корт:	</b>' + 'нет'  + '<br>' +
+                			'<b>Теннисные столы:	</b>' + 'нет'  + '<br>' +
+                			'</p>'
+                		//balloonContentFooter:'<sup>Щелкните еще раз</sup>'
+            
+				    }, {
+				        // Задаем опции геообъекта.
+				        // Цвет заливки.
+				        fillColor: '#00FF0088',
+				        fillOpacity: 0.4,
+				        // Ширина обводки.
+				        strokeWidth: 5,
+				        draggable: true
+				    });
+
+				    // Добавляем многоугольник на карту.
+				    myMap.geoObjects.add(myPolygon2);
+
+				    //myPolygon2.editor.startEditing();
+
+				    
+				    //myPolygon2.editor.events.add("vertexdragend", getCoordinates);
+				   // myPolygon2.editor.events.add("edgedragend", getCoordinates);
+
+			};
+
+			function getCoordinates (event) {
+				console.log('lalala');
+
+				var myPoint = event.get("target");
+				var coor = myPoint.geometry.getCoordinates();
+
+				console.log( JSON.stringify(coor) );
+			}
+
+
+		</script>
+
+
+	</body>
+</html>
