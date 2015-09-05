@@ -36,10 +36,12 @@
 				for( var i=0; i < tos_objects.length; i++ ) {
 					var house = tos_objects[i];
 					
-					var houseName = house.yandex_api_data.name;
-					var houseDescription = house.yandex_api_data.description;
-					var houseApartments = house.apartments;
-					var housePoint = house.yandex_api_data.Point.pos.split( ' ' );
+					var houseName 			= house.yandex_api_data.name;
+					var houseDescription 	= house.yandex_api_data.description;
+					var houseApartments 	= ( house.apartments != 0 ) ? house.apartments : 'неизвестно';
+					var entrances			= ( house.entrances != 0 ) ? house.entrances : 'неизвестно';
+					var floors				= ( house.floors != 0 ) ? house.floors : 'неизвестно';
+					var housePoint 			= house.yandex_api_data.Point.pos.split( ' ' );
 
 					var hintContent = houseName + '  (Квартир: '+ houseApartments + ')';
 					var body_html = '';
@@ -49,7 +51,9 @@
 					body_html += '</p>';
 
 					body_html += '<p>';
-					body_html += '<b>Количество квартир: </b>' + houseApartments;
+					body_html += '<b>Квартиры: </b>' + houseApartments;
+					body_html += '<br><b>Подъезды: </b>' + entrances;
+					body_html += '<br><b>Этажи: </b>' + floors;
 					body_html += '</p>';
 
 					var houseMark = new ymaps.Placemark( [housePoint[1], housePoint[0]], { 
@@ -110,7 +114,7 @@
 					body_html += '</p>';
 					body_html += '<h3>Парковочные места</h3>';
 					body_html += '<p>';
-					body_html += '<b>Всего: ' + 0 + ' мест</b>';
+					body_html += '<b>Всего: неизветстно</b>';
 					body_html += '</p>';
 
 					var courtyardPolygon = new ymaps.Polygon([
