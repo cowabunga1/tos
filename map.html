@@ -15,6 +15,9 @@
 
 		<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
 
+
+		<script type="text/javascript" src="tos_db.js"></script>
+		<script type="text/javascript" src="tos_courtyard_db.js"></script>
 		<script type="text/javascript">
 
 			ymaps.ready(make_map);
@@ -30,102 +33,127 @@
 				});
 
 
-				// Создаем многоугольник, используя вспомогательный класс Polygon.
-				    var myPolygon = new ymaps.Polygon([
-				        // Указываем координаты вершин многоугольника.
-				        // Координаты вершин внешнего контура.
-				        [[55.120662960016396,36.6223662969589],[55.12038613260428,36.62280586011886],[55.11952535665706,36.62243413988112],[55.119622282089686,36.621937550926205],[55.120662960016396,36.6223662969589]]
-				    ], {
-				        // Описываем свойства геообъекта.
-				        // Содержимое балуна.
-				        hintContent: 'Двор №' + '1',
-				        
-               			balloonContentHeader:'Двор №' + '1',
-                		balloonContentBody: '<h3>Население</h3>' +
-                			'<p>' +
-                			'Курчатова 60: <b>60</b>' + '<br>' +
-                			'Курчатова 64: <b>90</b>' + '<br>' +
-                			'Курчатова 66: <b>30</b>' + '<br>' +
-                			'Курчатова 68: <b>50</b>' + '<br>' +
-                			'<b>Всего: 230 жителей</b>' +
-                			'</p>' +
-                			
-                			'<h3>Инфрастуктура</h3>' +
-                			'<p>' +
-                			'<b>Детская площадка:	</b>' + 'есть'  + '<br>' +
-                			'<b>Турники	: </b>' + 'нет'  + '<br>' +
-                			'<b>Баскетбольный корт:	</b>' + 'нет'  + '<br>' +
-                			'<b>Футбольное поле:	</b>' + 'нет'  + '<br>' +
-                			'<b>Хоккейный корт:	</b>' + 'нет'  + '<br>' +
-                			'<b>Теннисные столы:	</b>' + 'нет'  + '<br>' +
-                			'</p>'
-                		//balloonContentFooter:'<sup>Щелкните еще раз</sup>'
-            
-				    }, {
-				        // Задаем опции геообъекта.
-				        // Цвет заливки.
-				        fillColor: '#00FF0088',
-				        fillOpacity: 0.4,
-				        // Ширина обводки.
-				        strokeWidth: 5,
-				        draggable: true
-				    });
+				for( var i=0; i < tos_objects.length; i++ ) {
+					var house = tos_objects[i];
+					
+					var houseName = house.yandex_api_data.name;
+					var houseDescription = house.yandex_api_data.description;
+					var houseApartments = house.apartments;
+					var housePoint = house.yandex_api_data.Point.pos.split( ' ' );
 
-				    // Добавляем многоугольник на карту.
-				    myMap.geoObjects.add(myPolygon);
+					var hintContent = houseName + '  (Квартир: '+ houseApartments + ')';
+					var body_html = '';
+					
+					body_html += '<p>';
+					body_html += 'Расположение: ' + houseDescription;
+					body_html += '</p>';
 
+					body_html += '<p>';
+					body_html += '<b>Количество квартир: </b>' + houseApartments;
+					body_html += '</p>';
 
-				    var myPolygon2 = new ymaps.Polygon([
-				        // Указываем координаты вершин многоугольника.
-				        // Координаты вершин внешнего контура.
-				        [[55.11909959277939,36.61800502509522],[55.118895829138836,36.61943180073222],[55.118563026877446,36.61930131974625],[55.11873447309761,36.61791040422877],[55.118756803132946,36.61792764844361],[55.11909959277939,36.61800502509522]]
-				    ], {
-				        // Описываем свойства геообъекта.
-				        // Содержимое балуна.
-				        hintContent: 'Двор №' + '2',
-				        
-               			balloonContentHeader:'Двор №' + '2',
-                		balloonContentBody: '<h3>Население</h3>' +
-                			'<p>' +
-                			'Энгельса 4: <b>108</b>' + '<br>' +
-                			'Энгельса 6: <b>144</b>' + '<br>' +
-                			'<b>Всего: 152 жителей</b>' +
-                			'</p>' +
-                			
-                			'<h3>Инфрастуктура</h3>' +
-                			'<p>' +
-                			'<b>Детская площадка:	</b>' + 'нет'  + '<br>' +
-                			'<b>Турники	: </b>' + 'нет'  + '<br>' +
-                			'<b>Баскетбольный корт:	</b>' + 'нет'  + '<br>' +
-                			'<b>Футбольное поле:	</b>' + 'нет'  + '<br>' +
-                			'<b>Хоккейный корт:	</b>' + 'нет'  + '<br>' +
-                			'<b>Теннисные столы:	</b>' + 'нет'  + '<br>' +
-                			'</p>'
-                		//balloonContentFooter:'<sup>Щелкните еще раз</sup>'
-            
-				    }, {
-				        // Задаем опции геообъекта.
-				        // Цвет заливки.
-				        fillColor: '#00FF0088',
-				        fillOpacity: 0.4,
-				        // Ширина обводки.
-				        strokeWidth: 5,
-				        draggable: true
-				    });
+					var houseMark = new ymaps.Placemark( [housePoint[1], housePoint[0]], { 
+						iconContent: houseApartments,
+						hintContent: hintContent,
+						balloonContentHeader: houseName,
+						balloonContentBody: body_html
+					}, {
+						 preset: "islands#blueStretchyIcon"
+					});
+					myMap.geoObjects.add( houseMark );
 
-				    // Добавляем многоугольник на карту.
-				    myMap.geoObjects.add(myPolygon2);
+				};
 
-				    //myPolygon2.editor.startEditing();
+				for( var j=0; j < tos_courtyard_objects.length; j++ ) {
+					var courtyard = tos_courtyard_objects[j];
 
-				    
-				    //myPolygon2.editor.events.add("vertexdragend", getCoordinates);
-				   // myPolygon2.editor.events.add("edgedragend", getCoordinates);
+					var courtyardPolygon 	= courtyard.Polygon;
+					var courtyardName 		= courtyard.name;
+					var courtyardHouses 	= courtyard.houses;
+					var total_apartments	= 0;
+
+					var infrastructure = courtyard.infrastructure;
+					//console.log( infrastructure );
+
+					var playground 	= infrastructure.playground ? 'да' : 'нет';
+					var workout 	= infrastructure.workout ? 'да' : 'нет';
+					var basketball 	= infrastructure.basketball ? 'да' : 'нет';
+					var footbal 	= infrastructure.footbal ? 'да' : 'нет';
+					var hokkey 		= infrastructure.hokkey ? 'да' : 'нет';
+					var pingpong 	= infrastructure.pingpong ? 'да' : 'нет';
+
+					// var houseDescription = house.yandex_api_data.description;
+					// var houseApartments = house.apartments;
+					// var housePoint = house.yandex_api_data.Point.pos.split( ' ' );
+
+					// var hintContent = houseName + '  (Квартир: '+ houseApartments + ')';
+					var body_html = '';
+					
+					body_html += '<h3>Жилой фонд</h3>';
+
+					body_html += '<p>';
+					for( var k=0; k < courtyardHouses.length; k++ ) {
+						var cyHouse = courtyardHouses[k];
+						total_apartments += cyHouse.apartments;
+						body_html += cyHouse.name + ': <b>' + cyHouse.apartments + '</b><br>';
+					}
+					body_html += '<b>Всего: ' + total_apartments + ' квартир</b>';
+					body_html += '</p>';
+					body_html += '<h3>Инфрастуктура</h3>';
+					body_html += '<p>';
+					body_html += '<b>Детская площадка:	</b>' + playground;
+					body_html += '<br><b>Турники:	</b>' + workout;
+					body_html += '<br><b>Баскетбольная площадка:	</b>' + basketball;
+					body_html += '<br><b>Футбольное поле:	</b>' + footbal;
+					body_html += '<br><b>Хоккейный корт:	</b>' + hokkey;
+					body_html += '<br><b>Теннисные столы:	</b>' + pingpong;
+					body_html += '</p>';
+					body_html += '<h3>Парковочные места</h3>';
+					body_html += '<p>';
+					body_html += '<b>Всего: ' + 0 + ' мест</b>';
+					body_html += '</p>';
+
+					var courtyardPolygon = new ymaps.Polygon([
+						// Указываем координаты вершин многоугольника.
+						// Координаты вершин внешнего контура.
+						courtyardPolygon
+					], {
+						// Описываем свойства геообъекта.
+						// Содержимое балуна.
+						hintContent: courtyardName,
+						
+						balloonContentHeader: courtyardName,
+						balloonContentBody: body_html
+			
+					}, {
+						// Задаем опции геообъекта.
+						// Цвет заливки.
+						fillColor: '#00FF0088',
+						fillOpacity: 0.4,
+						// Ширина обводки.
+						strokeWidth: 5,
+
+						balloonMaxHeight: 600
+						//balloonPanelMaxMapArea: 0
+						// draggable: true
+					});
+
+					myMap.geoObjects.add( courtyardPolygon);
+
+					// courtyardPolygon.editor.startEditing();
+
+					
+					// courtyardPolygon.editor.events.add("vertexdragend", getCoordinates);
+					// courtyardPolygon.editor.events.add("edgedragend", getCoordinates);
+
+				};
+
+					
 
 			};
 
 			function getCoordinates (event) {
-				console.log('lalala');
+				console.log('New coordinates:');
 
 				var myPoint = event.get("target");
 				var coor = myPoint.geometry.getCoordinates();
