@@ -39,6 +39,7 @@
 
 		<script type="text/javascript" src="tos_db.js"></script>
 		<script type="text/javascript" src="tos_courtyard_db.js"></script>
+		<script type="text/javascript" src="warning_db.js"></script>
 		<script type="text/javascript">
 
 			ymaps.ready(make_map);
@@ -92,6 +93,34 @@
 				};
 
 				//myMap.geoObjects.add( housesCollection );
+			}
+
+			function setWarnings( warnings_obj ) {
+				for( var i=0; i < warnings_obj.length; i++ ) {
+					var warning = warnings_obj[i];
+					
+					/*var houseName 			= house.yandex_api_data.name;
+					var houseDescription 	= house.yandex_api_data.description;
+					var houseApartments 	= ( house.apartments != 0 ) ? house.apartments : 'неизвестно';
+					var entrances			= ( house.entrances != 0 ) ? house.entrances : 'неизвестно';
+					var floors				= ( house.floors != 0 ) ? house.floors : 'неизвестно';
+					
+
+					var hintContent = houseName + '  (Квартир: '+ houseApartments + ')';*/
+					var body_html 			= warning.body_html;
+					var name 				= warning.name;
+					var point 				= warning.Point.pos.split( ' ' );
+
+					var mark = new ymaps.Placemark( [point[1], point[0]], { 
+						iconContent: name,
+						hintContent: name,
+						balloonContentHeader: name,
+						balloonContentBody: body_html
+					}, {
+						 preset: "islands#redStretchyIcon"
+					});
+					myMap.geoObjects.add( mark );
+				};
 			}
 
 			function setCourtyards( courtyard_objects ) {
@@ -203,7 +232,7 @@
 				//courtyardsCollection = new ymaps.GeoObjectCollection(null);
 				setCourtyards( tos_courtyard_objects );
 				
-
+				setWarnings( warnings_objects );
 					
 
 			};
