@@ -43,19 +43,17 @@
 
 			ymaps.ready(make_map);
 			var myMap;
-			var factory_mark;
+			var housesCollection;
+			var courtyardsCollection;
+			//var factory_mark;
 
-			function make_map() {
+			var houseArray = [];
 
-				myMap = new ymaps.Map("map", {
-					center: [55.12177266, 36.61659852],
-					zoom: 16,
-					type: 'yandex#publicMap'
-				});
+			function setHouses( houses_obj ) {
+				housesCollection.removeAll();
 
-
-				for( var i=0; i < tos_objects.length; i++ ) {
-					var house = tos_objects[i];
+				for( var i=0; i < houses_obj.length; i++ ) {
+					var house = houses_obj[i];
 					
 					var houseName 			= house.yandex_api_data.name;
 					var houseDescription 	= house.yandex_api_data.description;
@@ -85,12 +83,22 @@
 					}, {
 						 preset: "islands#blueStretchyIcon"
 					});
-					myMap.geoObjects.add( houseMark );
+					housesCollection.add( houseMark );
+					//myMap.geoObjects.add( houseMark );
+
+
+					//houseArray.push( houseMark );
 
 				};
 
-				for( var j=0; j < tos_courtyard_objects.length; j++ ) {
-					var courtyard = tos_courtyard_objects[j];
+				myMap.geoObjects.add( housesCollection );
+			}
+
+			function setCourtyards( courtyard_objects ) {
+				courtyardsCollection.removeAll();
+
+				for( var j=0; j < courtyard_objects.length; j++ ) {
+					var courtyard = courtyard_objects[j];
 
 					var courtyardPolygon 	= courtyard.Polygon;
 					var courtyardName 		= courtyard.name;
@@ -160,18 +168,41 @@
 
 						balloonMaxHeight: 600,
 						//balloonPanelMaxMapArea: 0
-						draggable: false
+						draggable: true
 					});
 
-					myMap.geoObjects.add( courtyardPolygon);
+					myMap.geoObjects.add( courtyardPolygon );
 
-					// courtyardPolygon.editor.startEditing();
+					//courtyardsCollection.add( courtyardPolygon );
+					
+
+					courtyardPolygon.editor.startEditing();
 
 					
-					// courtyardPolygon.editor.events.add("vertexdragend", getCoordinates);
-					// courtyardPolygon.editor.events.add("edgedragend", getCoordinates);
+					courtyardPolygon.editor.events.add("vertexdragend", getCoordinates);
+					courtyardPolygon.editor.events.add("edgedragend", getCoordinates);
 
 				};
+
+				//myMap.geoObjects.add( courtyardsCollection );
+			}
+
+			function make_map() {
+
+				myMap = new ymaps.Map("map", {
+					center: [55.12177266, 36.61659852],
+					zoom: 16,
+					type: 'yandex#publicMap'
+				});
+
+				housesCollection = new ymaps.GeoObjectCollection(null);
+				setHouses( tos_objects );
+				
+
+				
+				courtyardsCollection = new ymaps.GeoObjectCollection(null);
+				setCourtyards( tos_courtyard_objects );
+				
 
 					
 
