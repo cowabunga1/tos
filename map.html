@@ -171,20 +171,20 @@
 						draggable: true
 					});
 
-					myMap.geoObjects.add( courtyardPolygon );
+					// myMap.geoObjects.add( courtyardPolygon );
 
-					//courtyardsCollection.add( courtyardPolygon );
+					courtyardsCollection.add( courtyardPolygon );
 					
 
-					courtyardPolygon.editor.startEditing();
+					// courtyardPolygon.editor.startEditing();
 
 					
-					courtyardPolygon.editor.events.add("vertexdragend", getCoordinates);
-					courtyardPolygon.editor.events.add("edgedragend", getCoordinates);
+					// courtyardPolygon.editor.events.add("vertexdragend", getCoordinates);
+					// courtyardPolygon.editor.events.add("edgedragend", getCoordinates);
 
 				};
 
-				//myMap.geoObjects.add( courtyardsCollection );
+				myMap.geoObjects.add( courtyardsCollection );
 			}
 
 			function make_map() {
@@ -208,14 +208,14 @@
 
 			};
 
-			function getCoordinates (event) {
+			/*function getCoordinates (event) {
 				console.log('New coordinates:');
 
 				var myPoint = event.get("target");
 				var coor = myPoint.geometry.getCoordinates();
 
 				console.log( JSON.stringify(coor) );
-			}
+			}*/
 
 
 		</script>
