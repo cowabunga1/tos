@@ -1715,6 +1715,55 @@ var tos_objects = [
   }
  },
  {
+  "floors": "0",
+  "city": "Обнинск",
+  "name": "Калужская 12",
+  "apartments": "0",
+  "entrances": "0",
+  "yandex_api_data": {
+   "metaDataProperty": {
+    "GeocoderMetaData": {
+     "kind": "house",
+     "text": "Россия, Калужская область, Обнинск, Калужская улица, 12",
+     "precision": "exact",
+     "AddressDetails": {
+      "Country": {
+       "AddressLine": "Калужская область, Обнинск, Калужская улица, 12",
+       "CountryNameCode": "RU",
+       "CountryName": "Россия",
+       "AdministrativeArea": {
+        "AdministrativeAreaName": "Калужская область",
+        "SubAdministrativeArea": {
+         "SubAdministrativeAreaName": "городской округ Обнинск",
+         "Locality": {
+          "LocalityName": "Обнинск",
+          "Thoroughfare": {
+           "ThoroughfareName": "Калужская улица",
+           "Premise": {
+            "PremiseNumber": "12"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "description": "Обнинск, Калужская область, Россия",
+   "name": "Калужская улица, 12",
+   "boundedBy": {
+    "Envelope": {
+     "lowerCorner": "36.609842 55.116835",
+     "upperCorner": "36.626299 55.126266"
+    }
+   },
+   "Point": {
+    "pos": "36.618071 55.121551"
+   }
+  }
+ },
+ {
   "floors": "9",
   "city": "Обнинск",
   "name": "Энгельса 2",
