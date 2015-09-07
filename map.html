@@ -107,7 +107,15 @@
 					
 
 					var hintContent = houseName + '  (Квартир: '+ houseApartments + ')';*/
-					var body_html 			= warning.body_html;
+					var body_html = '';
+					body_html 				+= warning.image;
+					body_html 				+= '<p>';
+					body_html 				+= warning.description;
+					body_html 				+= '</p>';
+					body_html 				+= '<h3>Статьи в сети</h3>';
+					body_html 				+= warning.body_html;
+
+
 					var name 				= warning.name;
 					var point 				= warning.Point.pos.split( ' ' );
 
@@ -117,7 +125,8 @@
 						balloonContentHeader: name,
 						balloonContentBody: body_html
 					}, {
-						 preset: "islands#redStretchyIcon"
+						 preset: "islands#redStretchyIcon",
+						 balloonMaxHeight: 600,
 					});
 					myMap.geoObjects.add( mark );
 				};
