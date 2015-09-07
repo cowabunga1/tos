@@ -43,14 +43,14 @@
 
 			ymaps.ready(make_map);
 			var myMap;
-			var housesCollection;
-			var courtyardsCollection;
+			//var housesCollection;
+			//var courtyardsCollection;
 			//var factory_mark;
 
-			var houseArray = [];
+			//var houseArray = [];
 
 			function setHouses( houses_obj ) {
-				housesCollection.removeAll();
+				//housesCollection.removeAll();
 
 				for( var i=0; i < houses_obj.length; i++ ) {
 					var house = houses_obj[i];
@@ -83,19 +83,19 @@
 					}, {
 						 preset: "islands#blueStretchyIcon"
 					});
-					housesCollection.add( houseMark );
-					//myMap.geoObjects.add( houseMark );
+					//housesCollection.add( houseMark );
+					myMap.geoObjects.add( houseMark );
 
 
 					//houseArray.push( houseMark );
 
 				};
 
-				myMap.geoObjects.add( housesCollection );
+				//myMap.geoObjects.add( housesCollection );
 			}
 
 			function setCourtyards( courtyard_objects ) {
-				courtyardsCollection.removeAll();
+				//courtyardsCollection.removeAll();
 
 				for( var j=0; j < courtyard_objects.length; j++ ) {
 					var courtyard = courtyard_objects[j];
@@ -171,9 +171,9 @@
 						draggable: true
 					});
 
-					// myMap.geoObjects.add( courtyardPolygon );
+					myMap.geoObjects.add( courtyardPolygon );
 
-					courtyardsCollection.add( courtyardPolygon );
+					//courtyardsCollection.add( courtyardPolygon );
 					
 
 					// courtyardPolygon.editor.startEditing();
@@ -184,7 +184,7 @@
 
 				};
 
-				myMap.geoObjects.add( courtyardsCollection );
+				//myMap.geoObjects.add( courtyardsCollection );
 			}
 
 			function make_map() {
@@ -195,12 +195,12 @@
 					type: 'yandex#publicMap'
 				});
 
-				housesCollection = new ymaps.GeoObjectCollection(null);
+				//housesCollection = new ymaps.GeoObjectCollection(null);
 				setHouses( tos_objects );
 				
 
 				
-				courtyardsCollection = new ymaps.GeoObjectCollection(null);
+				//courtyardsCollection = new ymaps.GeoObjectCollection(null);
 				setCourtyards( tos_courtyard_objects );
 				
 
